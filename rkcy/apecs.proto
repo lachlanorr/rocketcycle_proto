@@ -4,10 +4,10 @@
 
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
+
+import "google/protobuf/timestamp.proto";
 
 // Convenience empty message for services that return or accept no data
 message Void {}

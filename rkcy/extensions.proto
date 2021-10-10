@@ -1,0 +1,19 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+syntax = "proto3";
+
+package rkcy;
+option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+    optional bool config = 1137100;
+}
+
+message Decimal {
+    int64 i = 1; // integer
+    int64 f = 2; // fraction
+}
