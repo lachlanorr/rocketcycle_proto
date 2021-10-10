@@ -8,8 +8,8 @@ package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
 import "google/api/annotations.proto";
-import "apecs.proto";
-import "platform.proto";
+import "rkcy/apecs.proto";
+import "rkcy/platform.proto";
 
 message DecodeInstanceArgs {
     string concern = 1;

@@ -7,7 +7,7 @@ syntax = "proto3";
 package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
-import "platform.proto";
+import "rkcy/platform.proto";
 
 // Type implies what topics will be present
 enum Directive {

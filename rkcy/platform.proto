@@ -9,7 +9,7 @@ import "google/protobuf/timestamp.proto";
 package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
-import "apecs.proto";
+import "rkcy/apecs.proto";
 
 message Platform {
     string name               = 1;
