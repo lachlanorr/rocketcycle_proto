@@ -13,6 +13,10 @@ extend google.protobuf.MessageOptions {
     optional bool config = 1137100;
 }
 
+extend google.protobuf.FieldOptions {
+    optional string related_concern = 1137101;
+}
+
 message Decimal {
     int64 i = 1; // integer
     int64 f = 2; // fraction
