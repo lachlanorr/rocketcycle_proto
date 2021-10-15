@@ -8,6 +8,7 @@ package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
 import "google/protobuf/timestamp.proto";
+import "rkcy/extensions.proto";
 
 // Convenience empty message for services that return or accept no data
 message Void {}
@@ -31,7 +32,7 @@ message ApecsTxn {
         string command = 3; // command name, this will map to a piece of code (e.g. function)
         string key     = 4; // instance key used as the partition key
         bytes payload  = 5; // opaque payload for command
-        Offset offset  = 6; // when no nil, indicates the process topic offset associated with the step
+        CompoundOffset cmpd_offset  = 6; // when no nil, indicates the process topic offset associated with the step
 
         Result result  = 7; // Result returned from step handler
 
@@ -52,7 +53,7 @@ message ApecsTxn {
 
             bytes instance = 6; // opaque payload returned from command
 
-            Offset offset  = 7;
+            CompoundOffset cmpd_offset  = 7;
         }
     }
 }
@@ -108,8 +109,35 @@ enum Code {
     RKCY_INTERNAL_MAX_CODE = 32;
 }
 
-message Offset {
+message CompoundOffset {
     int32 generation = 1;
     int32 partition  = 2;
     int64 offset     = 3;
+}
+
+message Config {
+    map<string, string> string_vals = 1;
+    map<string, bool> bool_vals = 2;
+    map<string, double> float64_vals = 3;
+    map<string, Decimal> decimal_vals = 4;
+
+    // key is protobuf message type
+    map<string, Complex> complex_vals = 5;
+
+    message Complex {
+        // key is id of message
+        // val is serialized protobuf
+        map<string, bytes> message_vals = 1;
+    }
+
+    message Update {
+        string key = 1;
+        oneof val {
+            string string_val = 2;
+            bool bool_val = 3;
+            double float64_val = 4;
+            Decimal decimal_val = 5;
+            Complex complex_val = 6;
+        }
+    }
 }

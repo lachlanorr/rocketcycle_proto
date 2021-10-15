@@ -18,6 +18,6 @@ extend google.protobuf.FieldOptions {
 }
 
 message Decimal {
-    int64 i = 1; // integer
-    int64 f = 2; // fraction
+    int64 l = 1; // left side of decimal
+    int64 r = 2; // right side of decimal
 }

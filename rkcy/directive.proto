@@ -30,6 +30,10 @@ enum Directive {
 
     APECS_TXN        = 0x00080000;
 
+    CONFIG           = 0x00100000;
+    CONFIG_PUBLISH   = 0x00100001;
+    CONFIG_UPDATE    = 0x00100002;
+
     ALL = -1;
 }
 

@@ -7,9 +7,11 @@ syntax = "proto3";
 package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
+import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "rkcy/apecs.proto";
 import "rkcy/platform.proto";
+import "rkcy/extensions.proto";
 
 message DecodeInstanceArgs {
     string concern = 1;
@@ -37,10 +39,55 @@ message TrackedProducers {
     }
 }
 
+message ConfigReadResponse {
+    Config config = 1;
+    string config_json = 2;
+    google.protobuf.Timestamp last_changed = 3;
+    int64 last_changed_offset = 4;
+}
+
+message ConfigReplaceRequest {
+    string config_json = 1;
+}
+
+message ConfigUpdateRequest {
+    string key = 1;
+    oneof val {
+        string string_val = 2;
+        int64 bool_val = 3;
+        double double_val = 4;
+        Decimal decimal_val = 5;
+    }
+}
+
+message ConfigUpdateComplexRequest {
+    string type = 1;
+    string key = 2;
+    string complex_json = 3;
+}
+
 service AdminService {
     rpc Platform(Void) returns (rkcy.Platform) {
         option (google.api.http) = {
             get: "/v1/platform/read"
+        };
+    }
+
+    rpc ConfigRead(Void) returns (ConfigReadResponse) {
+        option (google.api.http) = {
+            get: "/v1/config/read"
+        };
+    }
+
+    rpc ConfigUpdate(ConfigUpdateRequest) returns (Void) {
+        option (google.api.http) = {
+            post: "/v1/config/update"
+        };
+    }
+
+    rpc ConfigUpdateComplex(ConfigUpdateComplexRequest) returns (Void) {
+        option (google.api.http) = {
+            post: "/v1/config/update/complex"
         };
     }
 
