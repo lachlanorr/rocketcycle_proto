@@ -10,11 +10,21 @@ option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 import "google/protobuf/descriptor.proto";
 
 extend google.protobuf.MessageOptions {
-    optional bool config = 1137100;
+    optional bool is_config  = 11371000;
+    optional bool is_concern = 11371001;
 }
 
 extend google.protobuf.FieldOptions {
-    optional string related_concern = 1137101;
+    optional RelatedConfig related_config   = 11371100;
+    optional RelatedConcern related_concern = 11371101;
+}
+
+message RelatedConfig {
+    string id_field = 1;
+}
+
+message RelatedConcern {
+    string id_field = 1;
 }
 
 message Decimal {
