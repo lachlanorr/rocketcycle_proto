@@ -49,11 +49,13 @@ message ApecsTxn {
             // general bucket for log events during a processed event
             repeated LogEvent logEvents = 4;
 
-            bytes payload  = 5; // opaque payload returned from command, will be the input payload of next step
+            string key = 5; // if present, this key should be used in next step
 
-            bytes instance = 6; // opaque payload returned from command
+            bytes payload  = 6; // opaque payload returned from command, will be the input payload of next step
 
-            CompoundOffset cmpd_offset  = 7;
+            bytes instance = 7; // opaque payload returned from command
+
+            CompoundOffset cmpd_offset  = 8;
         }
     }
 }
