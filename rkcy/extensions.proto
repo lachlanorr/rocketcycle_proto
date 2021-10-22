@@ -15,8 +15,9 @@ extend google.protobuf.MessageOptions {
 }
 
 extend google.protobuf.FieldOptions {
-    optional RelatedConfig related_config   = 11371100;
-    optional RelatedConcern related_concern = 11371101;
+    optional bool is_key                    = 11371100;
+    optional RelatedConfig related_config   = 11371101;
+    optional RelatedConcern related_concern = 11371102;
 }
 
 message RelatedConfig {
