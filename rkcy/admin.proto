@@ -11,7 +11,6 @@ import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "rkcy/apecs.proto";
 import "rkcy/platform.proto";
-import "rkcy/extensions.proto";
 
 message DecodeInstanceArgs {
     string concern = 1;
@@ -56,7 +55,6 @@ message ConfigUpdateRequest {
         string string_val = 2;
         int64 bool_val = 3;
         double double_val = 4;
-        Decimal decimal_val = 5;
     }
 }
 

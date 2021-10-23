@@ -27,8 +27,3 @@ message RelatedConfig {
 message RelatedConcern {
     string id_field = 1;
 }
-
-message Decimal {
-    int64 l = 1; // left side of decimal
-    int64 r = 2; // right side of decimal
-}

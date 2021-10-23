@@ -8,7 +8,6 @@ package rkcy;
 option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
 import "google/protobuf/timestamp.proto";
-import "rkcy/extensions.proto";
 
 // Convenience empty message for services that return or accept no data
 message Void {}
@@ -53,9 +52,11 @@ message ApecsTxn {
 
             bytes payload  = 6; // opaque payload returned from command, will be the input payload of next step
 
-            bytes instance = 7; // opaque payload returned from command
+            bytes related  = 7; // opaque payload returned from command, contains related data
 
-            CompoundOffset cmpd_offset  = 8;
+            bytes instance = 8; // opaque payload returned from command
+
+            CompoundOffset cmpd_offset  = 9;
         }
     }
 }
@@ -121,7 +122,6 @@ message Config {
     map<string, string> string_vals = 1;
     map<string, bool> bool_vals = 2;
     map<string, double> float64_vals = 3;
-    map<string, Decimal> decimal_vals = 4;
 
     // key is protobuf message type
     map<string, Complex> complex_vals = 5;
@@ -138,7 +138,6 @@ message Config {
             string string_val = 2;
             bool bool_val = 3;
             double float64_val = 4;
-            Decimal decimal_val = 5;
             Complex complex_val = 6;
         }
     }
