@@ -64,7 +64,7 @@ message AssocTxn {
     enum AssocType {
         UNDEFINED = 0;
         PARENT = 1;
-        STORAGE_UPDATE = 2;
+        GENERATED_UPDATE = 2;
     }
 }
 
