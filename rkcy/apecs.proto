@@ -13,8 +13,8 @@ import "google/protobuf/timestamp.proto";
 message Void {}
 
 message ApecsTxn {
-    string trace_id = 1; // uuid of txn used for tracing and reporting
-    repeated string assoc_trace_ids = 2; // trace_id's of associated transaction
+    string id = 1; // uuid of txn used for tracing and reporting
+    repeated AssocTxn assoc_txns = 2; // associated transactions
 
     TopicTarget response_target = 3;
 
@@ -49,15 +49,22 @@ message ApecsTxn {
             repeated LogEvent logEvents = 4;
 
             string key = 5; // if present, this key should be used in next step
-
             bytes payload  = 6; // opaque payload returned from command, will be the input payload of next step
+            bytes instance = 7; // opaque payload returned from command
 
-            bytes related  = 7; // opaque payload returned from command, contains related data
-
-            bytes instance = 8; // opaque payload returned from command
-
-            CompoundOffset cmpd_offset  = 9;
+            CompoundOffset cmpd_offset  = 8;
         }
+    }
+}
+
+message AssocTxn {
+    string id = 1;
+    AssocType type = 2;
+
+    enum AssocType {
+        UNDEFINED = 0;
+        PARENT = 1;
+        STORAGE_UPDATE = 2;
     }
 }
 
