@@ -31,9 +31,11 @@ message ApecsTxn {
         string command = 3; // command name, this will map to a piece of code (e.g. function)
         string key     = 4; // instance key used as the partition key
         bytes payload  = 5; // opaque payload for command
-        CompoundOffset cmpd_offset  = 6; // when no nil, indicates the process topic offset associated with the step
 
-        Result result  = 7; // Result returned from step handler
+        google.protobuf.Timestamp effective_time = 6; // time at which command should consider itself running
+
+        CompoundOffset cmpd_offset  = 7; // when no nil, indicates the process topic offset associated with the step
+        Result result  = 8; // Result returned from step handler
 
         message Result {
             // Result code of step, generally one of "Code" enum below but users can define their own codes greater than RKCY_INTERNAL_MAX
@@ -41,9 +43,6 @@ message ApecsTxn {
 
             // actual time this command result was recorded
             google.protobuf.Timestamp processed_time = 2;
-
-            // effective time, useful in some applications as it may make sense to deviate from processed_time for reporting purposes
-            google.protobuf.Timestamp effective_time = 3;
 
             // general bucket for log events during a processed event
             repeated LogEvent logEvents = 4;
