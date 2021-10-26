@@ -63,7 +63,7 @@ message AssocTxn {
     enum AssocType {
         UNDEFINED = 0;
         PARENT = 1;
-        GENERATED_UPDATE = 2;
+        GENERATED_STORAGE = 2;
     }
 }
 
@@ -122,6 +122,19 @@ message CompoundOffset {
     int32 generation = 1;
     int32 partition  = 2;
     int64 offset     = 3;
+}
+
+message RelatedRequest {
+    string concern = 1;
+    string key = 2;
+    string field = 3;
+    bytes payload = 4;
+}
+
+message RelatedResponse {
+    string concern = 1;
+    string field = 2;
+    bytes payload = 3;
 }
 
 message Config {
