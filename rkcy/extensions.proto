@@ -20,7 +20,7 @@ extend google.protobuf.FieldOptions {
 }
 
 message Relation {
-    string id_field         = 1;
-    string related_id_field = 2;
-    string paired_with      = 3;
+    string id_field    = 1;
+    string rel_field   = 2;
+    string paired_with = 3;
 }
