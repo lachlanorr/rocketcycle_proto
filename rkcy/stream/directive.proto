@@ -1,0 +1,82 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+syntax = "proto3";
+
+package rkcy.stream;
+option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy/stream";
+
+// Type implies what topics will be present
+enum Directive {
+    UNSPECIFIED = 0;
+
+    PLATFORM         = 0x00010000;
+
+    PRODUCER         = 0x00020000;
+    PRODUCER_STOP    = 0x00020001;
+    PRODUCER_STOPPED = 0x00020002;
+    PRODUCER_START   = 0x00020004;
+    PRODUCER_STARTED = 0x00020008;
+    PRODUCER_STATUS  = 0x00020010;
+
+    CONSUMER         = 0x00040000;
+    CONSUMER_STOP    = 0x00040001;
+    CONSUMER_STOPPED = 0x00040002;
+    CONSUMER_START   = 0x00040004;
+    CONSUMER_STARTED = 0x00040008;
+
+    APECS_TXN        = 0x00080000;
+
+    CONFIG           = 0x00100000;
+    CONFIG_PUBLISH   = 0x00100001;
+    CONFIG_UPDATE    = 0x00100002;
+
+    ALL = -1;
+}
+
+message ProducerDirective {
+    string id                = 1;
+    string brokers           = 2;
+    string concern_name      = 3;
+    ConcernType concern_type = 4;
+    string topic             = 5;
+    int32 generation         = 6;
+}
+
+message ConsumerDirective {
+    Program program = 1;
+}
+
+// Type implies what topics will be present
+enum ConcernType {
+    // Required topics:
+    //     * admin - handles control messages to coordinate distributed tasks
+    //     * error - errors encountered during processing written here
+    //     * ... - additional concern specific topics
+    GENERAL = 0;
+
+    // Required topics:
+    //     * admin - handles control messages to coordinate distributed tasks
+    //     * error - errors encountered during processing written here
+    //     * ... - additional concern specific topics for stages of batch processing
+    // For telemetry purposes, stage topics are assumed to be in alphabetical order.
+    // Batch jobs topics aren't created by default, but on demand with the timestamp
+    // included in the names.
+    BATCH = 1;
+
+    // Required topics:
+    //     * admin - handles control messages to coordinate distributed tasks
+    //     * process - handles messages that affect internal state of models
+    //     * error - errors encountered during processing written here
+    //     * complete - completed transactions written here for post processing
+    //     * storage - handles messages sent to the persistence layer
+    APECS = 2;
+}
+
+message Program {
+    string name = 1;
+    repeated string args = 2;
+    string abbrev = 3;
+    map<string, string> tags = 4;
+}
