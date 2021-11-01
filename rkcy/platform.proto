@@ -12,10 +12,11 @@ import "rkcy/apecs.proto";
 
 message Platform {
     string name               = 1;
-    repeated Concern concerns = 2;
-    repeated Cluster clusters = 3;
+    string environment        = 2;
+    repeated Concern concerns = 3;
+    repeated Cluster clusters = 4;
 
-    google.protobuf.Timestamp update_time = 4;
+    google.protobuf.Timestamp update_time = 5;
 
     message Concern {
         Type type              = 1;
