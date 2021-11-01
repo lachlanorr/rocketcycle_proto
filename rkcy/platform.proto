@@ -9,7 +9,6 @@ option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
 
 import "google/protobuf/timestamp.proto";
 import "rkcy/apecs.proto";
-import "rkcy/stream/directive.proto";
 
 message Platform {
     string name               = 1;
@@ -20,11 +19,37 @@ message Platform {
     google.protobuf.Timestamp update_time = 5;
 
     message Concern {
-        stream.ConcernType type              = 1;
+        Type type              = 1;
         string name            = 2;
         Severity log_level     = 3;
 
         repeated Topics topics = 4;
+
+        // Type implies what topics will be present
+        enum Type {
+            // Required topics:
+            //     * admin - handles control messages to coordinate distributed tasks
+            //     * error - errors encountered during processing written here
+            //     * ... - additional concern specific topics
+            GENERAL = 0;
+
+            // Required topics:
+            //     * admin - handles control messages to coordinate distributed tasks
+            //     * error - errors encountered during processing written here
+            //     * ... - additional concern specific topics for stages of batch processing
+            // For telemetry purposes, stage topics are assumed to be in alphabetical order.
+            // Batch jobs topics aren't created by default, but on demand with the timestamp
+            // included in the names.
+            BATCH = 1;
+
+            // Required topics:
+            //     * admin - handles control messages to coordinate distributed tasks
+            //     * process - handles messages that affect internal state of models
+            //     * error - errors encountered during processing written here
+            //     * complete - completed transactions written here for post processing
+            //     * storage - handles messages sent to the persistence layer
+            APECS = 2;
+        }
 
         message Topics {
             // base name, it will get decorated with additional dot notated pieces
@@ -39,7 +64,7 @@ message Platform {
             // null unless an active migration is taking place
             Topic future  = 4;
 
-            stream.Program consumer_program = 5;
+            Program consumer_program = 5;
 
             // States surrounding current vs future topics and current to future transition
             enum State {
@@ -86,4 +111,11 @@ message Platform {
         FNV64_MOD              = 0;
     }
 
+}
+
+message Program {
+    string name = 1;
+    repeated string args = 2;
+    string abbrev = 3;
+    map<string, string> tags = 4;
 }
