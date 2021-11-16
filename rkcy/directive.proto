@@ -34,6 +34,10 @@ enum Directive {
     CONFIG_PUBLISH   = 0x00100001;
     CONFIG_UPDATE    = 0x00100002;
 
+    CONCERN_ADMIN            = 0x00200000;
+    CONCERN_ADMIN_READY      = 0x00200001;
+    CONCERN_ADMIN_CANCEL_TXN = 0x00200002;
+
     ALL = -1;
 }
 

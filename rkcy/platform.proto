@@ -16,7 +16,9 @@ message Platform {
     repeated Concern concerns = 3;
     repeated Cluster clusters = 4;
 
-    google.protobuf.Timestamp update_time = 5;
+    repeated StorageTarget storage_targets = 5;
+
+    google.protobuf.Timestamp update_time = 6;
 
     message Concern {
         Type type              = 1;
@@ -64,7 +66,7 @@ message Platform {
             // null unless an active migration is taking place
             Topic future  = 4;
 
-            Program consumer_program = 5;
+            repeated Program consumer_programs = 5;
 
             // States surrounding current vs future topics and current to future transition
             enum State {
@@ -99,11 +101,19 @@ message Platform {
 
     message Cluster {
         // unique name of cluster
-        string name              = 1;
+        string name    = 1;
         // kafka brokers for the cluster
         string brokers = 2;
+        // brokers used for admin topics, only one cluster can have this set
+        bool is_admin  = 3;
     }
 
+    message StorageTarget {
+        string name = 1;
+        string type = 2;
+        bool is_primary = 3;
+        map<string,string> config = 4;
+    }
 
     // Different types of partitioning mechanisms
     enum PartitionStrategy {

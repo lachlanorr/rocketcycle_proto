@@ -47,23 +47,8 @@ message ConfigReadResponse {
     int64 last_changed_offset = 4;
 }
 
-message ConfigReplaceRequest {
-    string config_json = 1;
-}
-
-message ConfigUpdateRequest {
-    string key = 1;
-    oneof val {
-        string string_val = 2;
-        int64 bool_val = 3;
-        double double_val = 4;
-    }
-}
-
-message ConfigUpdateComplexRequest {
-    string type = 1;
-    string key = 2;
-    string complex_json = 3;
+message CancelTxnRequest {
+    string txn_id = 1;
 }
 
 service PortalService {
@@ -79,41 +64,30 @@ service PortalService {
         };
     }
 
-    rpc ConfigUpdate(ConfigUpdateRequest) returns (Void) {
-        option (google.api.http) = {
-            post: "/v1/config/update"
-        };
-    }
-
-    rpc ConfigUpdateComplex(ConfigUpdateComplexRequest) returns (Void) {
-        option (google.api.http) = {
-            post: "/v1/config/update/complex"
-        };
-    }
-
-    rpc Producers(Void) returns (rkcy.TrackedProducers) {
-        option (google.api.http) = {
-            get: "/v1/producers/read"
-        };
-    }
-
     rpc DecodeInstance(DecodeInstanceArgs) returns (DecodeResponse) {
         option (google.api.http) = {
-            post: "/v1/decode/instance"
+            post: "/v1/instance/decode"
             body: "*"
         };
     }
 
     rpc DecodeArgPayload(DecodePayloadArgs) returns (DecodeResponse) {
         option (google.api.http) = {
-            post: "/v1/decode/arg"
+            post: "/v1/arg/decode"
             body: "*"
         };
     }
 
     rpc DecodeResultPayload(DecodePayloadArgs) returns (DecodeResponse) {
         option (google.api.http) = {
-            post: "/v1/decode/result"
+            post: "/v1/result/decode"
+            body: "*"
+        };
+    }
+
+    rpc CancelTxn(CancelTxnRequest) returns (rkcy.Void) {
+        option (google.api.http) = {
+            post: "/v1/txn/cancel"
             body: "*"
         };
     }

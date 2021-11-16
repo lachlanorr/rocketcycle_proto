@@ -35,7 +35,8 @@ message ApecsTxn {
         google.protobuf.Timestamp effective_time = 6; // time at which command should consider itself running
 
         CompoundOffset cmpd_offset  = 7; // when no nil, indicates the process topic offset associated with the step
-        Result result  = 8; // Result returned from step handler
+        bytes instance = 8;
+        Result result  = 9; // Result returned from step handler
 
         message Result {
             // Result code of step, generally one of "Code" enum below but users can define their own codes greater than RKCY_INTERNAL_MAX
@@ -64,6 +65,7 @@ message AssocTxn {
         UNDEFINED = 0;
         PARENT = 1;
         GENERATED_STORAGE = 2;
+        SECONDARY_STORAGE = 3;
     }
 }
 
@@ -76,6 +78,7 @@ enum System {
     NO_SYSTEM = 0;
     PROCESS = 1;
     STORAGE = 2;
+    STORAGE_SCND = 3;
 }
 
 enum UponError {
@@ -103,19 +106,21 @@ enum Severity {
 }
 
 enum Code {
-    OK = 0;
-    INTERNAL = 1;
-    MARSHAL_FAILED = 2;
-    NOT_FOUND = 3;
-    CONNECTION = 4;
-    CONSTRAINT_VIOLATION = 5;
-	UNKNOWN_COMMAND = 6;
-    INVALID_ARGUMENT = 7;
-    NOT_IMPLEMENTED = 8;
-    NIL_RESULT = 9;
+    UNDEFINED = 0;
+    OK = 1;
+    INTERNAL = 2;
+    MARSHAL_FAILED = 3;
+    NOT_FOUND = 4;
+    CONNECTION = 5;
+    CONSTRAINT_VIOLATION = 6;
+    UNKNOWN_COMMAND = 7;
+    INVALID_ARGUMENT = 8;
+    NOT_IMPLEMENTED = 9;
+    NIL_RESULT = 10;
+    CANCELLED = 11;
 
-    // User defined codes should be greater than RKCY_INTERNAL_MAX
-    RKCY_INTERNAL_MAX_CODE = 32;
+    // User defined codes should be greater than RKCY_RESERVED_MAX
+    RKCY_RESERVED_MAX = 32;
 }
 
 message CompoundOffset {
@@ -160,4 +165,10 @@ message Config {
             Complex complex_val = 6;
         }
     }
+}
+
+message ConcernAdminDirective {
+    string concern = 1;
+    System system  = 2;
+    string txn_id  = 3;
 }
