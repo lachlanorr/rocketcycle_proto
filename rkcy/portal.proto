@@ -52,9 +52,9 @@ message CancelTxnRequest {
 }
 
 service PortalService {
-    rpc Platform(Void) returns (rkcy.Platform) {
+    rpc PlatformDef(Void) returns (rkcy.PlatformDef) {
         option (google.api.http) = {
-            get: "/v1/platform/read"
+            get: "/v1/platformDef/read"
         };
     }
 

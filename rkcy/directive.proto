@@ -45,7 +45,7 @@ message ProducerDirective {
     string id                               = 1;
     string brokers                          = 2;
     string concern_name                     = 3;
-    rkcy.Platform.Concern.Type concern_type = 4;
+    rkcy.Concern.Type concern_type = 4;
     string topic                            = 5;
     int32 generation                        = 6;
 }
