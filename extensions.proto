@@ -5,7 +5,7 @@
 syntax = "proto3";
 
 package rkcy;
-option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
+option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcypb";
 
 import "google/protobuf/descriptor.proto";
 

@@ -5,10 +5,10 @@
 syntax = "proto3";
 
 package rkcy;
-option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
+option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcypb";
 
 import "google/protobuf/timestamp.proto";
-import "rkcy/apecs.proto";
+import "apecs.proto";
 
 message PlatformDef {
     string name               = 1;
@@ -24,7 +24,7 @@ message PlatformDef {
 message Concern {
     Type type              = 1;
     string name            = 2;
-    Severity log_level     = 3;
+    rkcy.Severity log_level     = 3;
 
     repeated Topics topics = 4;
 

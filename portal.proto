@@ -5,12 +5,12 @@
 syntax = "proto3";
 
 package rkcy;
-option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcy";
+option go_package = "github.com/lachlanorr/rocketcycle/pkg/rkcypb";
 
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
-import "rkcy/apecs.proto";
-import "rkcy/platform.proto";
+import "apecs.proto";
+import "platform.proto";
 
 message DecodeInstanceArgs {
     string concern = 1;
