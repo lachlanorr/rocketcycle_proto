@@ -118,6 +118,10 @@ enum Code {
     NOT_IMPLEMENTED = 9;
     NIL_RESULT = 10;
     CANCELLED = 11;
+    STEP_ALREADY_COMPLETE = 12;
+    MISMATCHED_CONCERN = 13;
+    MISMATCHED_SYSTEM = 14;
+    KEY_NOT_PRESENT = 15;
 
     // User defined codes should be greater than RKCY_RESERVED_MAX
     RKCY_RESERVED_MAX = 32;
